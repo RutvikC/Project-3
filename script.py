@@ -9,10 +9,9 @@ def grep_options():
     print("                       [-n] -> precede each matching line with a line number")
     print("                       [-v] -> all lines, but only the ones that match ....etc")
 
-
 print("\n1. Search for files")
 print("2. Search for matching patterns in a file")
-print("3. ")
+print("3. Generate a directory tree (upto 2 levels deep)")
 print("4. Exit\n")
 
 choice = input ("Please select a command: ")
@@ -25,10 +24,10 @@ while choice != 4:
             option = raw_input("Enter grep option (press enter for no option): ")
             pattern = raw_input('Search for this string: ')
             if len(option) > 0:
-                found = subprocess.Popen(["grep", option, pattern, file_name], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+                found = subprocess.Popen(['grep', option, pattern, file_name], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
                 output, err = found.communicate()
             else:
-                found = subprocess.Popen(["grep", pattern, file_name], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+                found = subprocess.Popen(['grep', pattern, file_name], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
                 output, err = found.communicate()
 
             result = output.splitlines()
@@ -46,11 +45,16 @@ while choice != 4:
             print("This file does not exist: " + file_name)
         print("----------------------------------------------------------------------------------------------------")
 
-    elif choice == 1:
-
-
+    elif choice == 3:
+        directory = raw_input("Enter the directory path: ")
+        output_file = raw_input("Enter the output file name [with the .html extension and path]: ")
+        cmd = "sh ./chavda_myScript.sh " + directory + " " + output_file
+        os.system(cmd)
+        print("\nThe directory tree for " + directory + " is stored in " + output_file)
+        print("----------------------------------------------------------------------------------------------------")
 
     print("\n1. Search for files")
     print("2. Search for matching patterns in a file")
-    print("3. Exit\n")
+    print("3. Generate a directory tree (upto 2 levels deep)")
+    print("4. Exit\n")
     choice = input ("Please select one of the above options: ")
