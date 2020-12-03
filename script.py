@@ -25,15 +25,20 @@ print("5. Exit\n")
 choice = input ("Please select a command: ")
 cmd_number = 0
 log_file = open("log.txt", "a")
+log_file.write("***** START OF PROGRAM *****\n\n")
 
 while choice != 5:
-    if choice == 2:
+    if choice == 1:
+        cmd_number += 1
+
+
+    elif choice == 2:
         cmd_number += 1
         file_name = raw_input("\nEnter file name: ")
         if path.exists(file_name):
             grep_options()
-            option = raw_input("Enter grep option (press enter for no option): ")
-            pattern = raw_input('Search for this string: ')
+            option = raw_input("Enter grep options (press enter for no option): ")
+            pattern = raw_input('Search for this string (can use REGEX here): ')
             cmd = ['grep']
             if len(option) > 0:
                 cmd.extend(option.split())
@@ -54,7 +59,12 @@ while choice != 5:
             log_file.write(" Search File: " + file_name + "\n")
             log_file.write(" Search Option: " + option + "\n")
             log_file.write(" Search Pattern: " + pattern + "\n\n")
-            log_file.write(" " + output + "\n\n");
+            for i in result:
+                log_file.write(" " + i + "\n");
+            log_file.write("----------\n\n")
+
+        else:
+             print("This file does not exist: " + file_name)
         print("-------------------x-------------------x-------------------x-------------------x-------------------")
 
     elif choice == 3:
@@ -63,9 +73,9 @@ while choice != 5:
         output_file = raw_input("Enter the output file name [with the .html extension and path]: ")
         cmd = "sh ./chavda_myScript.sh " + directory + " " + output_file
         os.system(cmd)
-        log_file.write("Command " + str(cmd_number) + ": DIRECTORY TREE\n")
+        log_file.write("Command " + str(cmd_number) + ": DIRECTORY TREE SCRIPT\n")
         log_file.write(" Directory path: " + directory + "\n")
-        log_file.write(" Output file name (path): " + output_file + "\n\n")
+        log_file.write(" Output file name (path): " + output_file + "\n----------\n\n")
         print("\nThe directory tree for " + directory + " is stored in " + output_file)
         print("-------------------x-------------------x-------------------x-------------------x-------------------")
 
@@ -78,7 +88,7 @@ while choice != 5:
         os.system(cmd)
         log_file.write("Command " + str(cmd_number) + ": CHMOD\n")
         log_file.write(" Directory/File path: " + path + "\n")
-        log_file.write(" Permission for the dir/file: " + perm + "\n\n")
+        log_file.write(" Permission for the dir/file: " + perm + "\n----------\n\n")
         print("You have succefully changed the permission for " + path)
         print("-------------------x-------------------x-------------------x-------------------x-------------------")
 
@@ -88,5 +98,5 @@ while choice != 5:
     print("4. Change permissions of a file/directory")
     print("5. Exit\n")
     choice = input ("Please select a command: ")
-
+log_file.write("***** END OF PROGRAM *****\n\n")
 log_file.close()
