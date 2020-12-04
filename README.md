@@ -149,4 +149,4 @@ Your session has been logged into 'log.txt'
 THANK YOU..!!
 
 ```
-One thing you would notice, when the program execution ends it that there is a 'log.txt' file created in the current working directory. That file actually kept track of all the commands you ran from start to the end with the respective command numbers and also the found patterns for some of the commands along with the directory paths, file names, options, etc.
+One thing you would notice, when the program execution ends it that there is a 'log.txt' file created in the current working directory. That file actually kept track of all the commands you ran from start to the end with the respective command numbers and also the found patterns for some of the commands along with the directory paths, file names, options, etc. (I have pushed the exact same log.txt file that generated when I ran the above commands to the repo for reference)
