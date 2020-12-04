@@ -1,7 +1,7 @@
 # ECE 2524 - Project 3
 ## A Python script that helps the user perform some unix commands, but with a bit friendlier approach
 ---
-Earlier me and my partner were going to work on this project, but due to some problems he had to drop this class. And because of that I had to scale down the project a bit. 
+Earlier me and my partner were going to work on this project, but due to some problems he had to drop this class. And because of that I had to scale down the project a bit.
 
 The project is about using some common UNIX commands via a python executable. I came up with a simple user-friendly application that allows the user to search for files, or words inside a specific file alongside some other UNIX commands like generating a directory-tree and changing file permissions.
 
@@ -17,7 +17,7 @@ If the python version on your machine is Python 2.6 or higher than this script w
 Now moving onto running the project3_script.py. Below is an example on how to run the script: First you will be asked to choose an option, here I have selected 1. Since I am searching for a file, I am asked for the search directory path next. After entering that I am aksed for any specific find options that I want to enter along with some examples. And then finally the script runs the 'find' command on the input parameters and the found files are displayed on the terminal.
 
 ```
-$ python project3_script.py 
+$ python project3_script.py
 
 1. Search for files
 2. Search for matching patterns in a file
@@ -36,7 +36,7 @@ The search common one's are : [-name/-iname *.jpg] -> search by name/ignore case
                               [-depth 2] -> search atleast specified levels deep ...etc
 Enter the find option (press enter for no option): -name "text*" -size +6c
 
-The following files were found in: 
+The following files were found in:
  - ../text1.txt
  - ../Exercise 2/text1.txt
  - ../Exercise 2/text2.txt
@@ -44,9 +44,9 @@ The following files were found in:
 -------------------x-------------------x-------------------x-------------------x-------------------
 
 ```
-You can choose any option you like (**except -exec**; the reason for not using that option is because it ends with {} \\; _in python '\' is treated as an escape character and so it adds an extra '\\;' while parsing the input and I couldn't find any other way to get around it_)
+You can choose any option you like (**except -exec**; the reason for not using that option is because it ends with {} \\; _in python '\' is treated as an escape character and so it adds an extra '\\;' while parsing the input and therefore there is no way around it_)
 
-Continuing the example of choosing all the options with multiple variations in one session: (while choosing options from 2 to 4, you can get No such directory message on the terminal, which is likely that you don't have file permission to read. And so you need to go and manually change the file permissions, as there is no way this os.path() can bypass that error.)
+Continuing the example of choosing all the options with multiple variations in one session: (while choosing options from 2 to 4, you can get 'No such directory' message on the terminal, which is likely that you don't have file permission to read. And so you need to go and manually change the file permissions, as there is no way os.path() can bypass that error. I have a sample text file 'mycontact.txt' which you can use.)
 
 ```
 1. Search for files
@@ -63,8 +63,8 @@ The common one's are : [-i] -> ignore case
                        [-v] -> to select non-matching lines
                        [-w] -> select lines containing matches that form whole words
                        [-x] -> exactly match the whole line ....etc
-Enter grep options (press enter for no option): 
-Search for this string (can use REGEX here): .com 
+Enter grep options (press enter for no option):
+Search for this string (can use REGEX here): .com
 
 The following lines were found in /home/rutvik/ECE-2524/mycontact.txt:
  - aztecwrestling@google.com
@@ -149,4 +149,4 @@ Your session has been logged into 'log.txt'
 THANK YOU..!!
 
 ```
-One thing you would notice, when the program execution ends it that there is a 'log.txt' file created in the current working directory. That file actually kept track of all the commands you ran from start to the end with the respective command numbers and also the found patterns for some of the commands along with the directory paths, file names, options, etc. (I have pushed the exact same log.txt file that generated when I ran the above commands to the repo for reference)
+One thing you would notice, when the program execution ends it that there is a 'log.txt' file created in the current working directory. That file actually kept track of all the commands you ran from start to the end with the respective command numbers and also the found patterns for some of the commands along with the directory paths, file names, options, etc.
