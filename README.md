@@ -1,7 +1,7 @@
 # ECE 2524 - Project 3
 ## A Python script that helps the user perform some unix commands, but with a bit friendlier approach
 ---
-Earlier me and my partner were going to work on this project, but due to some problems he had to drop this class. And because of that I had to scale down the project a bit.
+**Earlier me and my partner were going to work on this project, but due to some problems he had to drop this class. And because of that I had to scale down the project a bit.**
 
 The project is about using some common UNIX commands via a python executable. I came up with a simple user-friendly application that allows the user to search for files, or words inside a specific file alongside some other UNIX commands like generating a directory-tree and changing file permissions.
 
@@ -12,7 +12,7 @@ $ python -V
 Python 3.8.2
 ```
 
-If the python version on your machine is Python 2.6 or higher than this script will not work on your machine. You need atleast 3.6 or higher for this script to run.
+If the python version on your machine is Python 2.6 or higher than this script will not work on your machine. You need at least 3.6 or higher for this script to run.
 
 Now moving onto running the project3_script.py. Below is an example on how to run the script: First you will be asked to choose an option, here I have selected 1. Since I am searching for a file, I am asked for the search directory path next. After entering that I am aksed for any specific find options that I want to enter along with some examples. And then finally the script runs the 'find' command on the input parameters and the found files are displayed on the terminal.
 
@@ -44,9 +44,8 @@ The following files were found in:
 -------------------x-------------------x-------------------x-------------------x-------------------
 
 ```
-You can choose any option you like (**except -exec**; the reason for not using that option is because it ends with {} \\; _in python '\' is treated as an escape character and so it adds an extra '\\;' while parsing the input and therefore there is no way around it_)
 
-Continuing the example of choosing all the options with multiple variations in one session: (while choosing options from 2 to 4, you can get 'No such directory' message on the terminal, which is likely that you don't have file permission to read. And so you need to go and manually change the file permissions, as there is no way os.path() can bypass that error. I have a sample text file 'mycontact.txt' which you can use.)
+Continuing the example of choosing all the options with multiple variations in one session: The second command is where I use 'grep' command to find for patterns in a file. Firstly the user is asked for the file name (can be an absolute path to the file as well). Then the user enters any grep options that he/she likes, and finally the user enters the string pattern (can be in "pattern" or 'pattern' or pattern). The user also has an option to use REGEX here. All the found lines are displayed onto the terminal too. 
 
 ```
 1. Search for files
@@ -72,7 +71,10 @@ The following lines were found in /home/rutvik/ECE-2524/mycontact.txt:
  - Lawsonhawk@yahoo.com
  - daren103@yahoo.com
 -------------------x-------------------x-------------------x-------------------x-------------------
+```
+This next example is also again of 'grep', but with multiple grep options:
 
+```
 1. Search for files
 2. Search for matching patterns in a file
 3. Generate a directory tree (upto 2 levels deep)
@@ -99,6 +101,12 @@ The following lines were found in ./mycontact.txt:
  - 36:Placentia, CA 90631
  - 44:Rosemead, CA 91770
 -------------------x-------------------x-------------------x-------------------x-------------------
+```
+
+This example is for generating directory trees using the script from Project-1 (**This idea is approved by the professor**). The user is asked for which directory s/he wants to generate the directory tree. And then also the output file name. Same as Project-1, the user is asked to enter .html extension with it because that's how the bash-script is written.
+
+```
+
 1. Search for files
 2. Search for matching patterns in a file
 3. Generate a directory tree (upto 2 levels deep)
@@ -112,6 +120,10 @@ Enter the output file name [with the .html extension and path]: ~/rutvik.html
 
 The directory tree for /home/rutvik/ECE-2524/ is stored in ~/rutvik.html
 -------------------x-------------------x-------------------x-------------------x-------------------
+```
+The last command is for changing file/directory permissions using 'chmod'. The user is asked for directory/file path, and is presented with the 8 different options of permission types. For the time being I only have support for numeric format of changing file permissions. So after entering the path, the user is asked to enter the numbers for user, group and others and the file permissions are changed.
+
+```
 
 1. Search for files
 2. Search for matching patterns in a file
@@ -136,7 +148,10 @@ chmod: cannot access '/home/rutvik/ECE-2524/Project': No such file or directory
 chmod: cannot access '2/Test_file3.cpp': No such file or directory
 You have succefully changed the permission for /home/rutvik/ECE-2524/Project 2/Test_file3.cpp
 -------------------x-------------------x-------------------x-------------------x-------------------
+```
+The last command is for exiting the script.
 
+```
 1. Search for files
 2. Search for matching patterns in a file
 3. Generate a directory tree (upto 2 levels deep)
@@ -150,3 +165,8 @@ THANK YOU..!!
 
 ```
 One thing you would notice, when the program execution ends it that there is a 'log.txt' file created in the current working directory. That file actually kept track of all the commands you ran from start to the end with the respective command numbers and also the found patterns for some of the commands along with the directory paths, file names, options, etc.
+
+# LIMITATIONS
+While choosing options from 2 to 4, you can get 'No such directory' message on the terminal, which is likely that you don't have file permission to read. And so you need to go and manually change the file permissions, as there is no way os.path() can bypass that error. I have a sample text file 'mycontact.txt' which you can use instead your file for grading purpose.
+
+When searching for files you cannot use **-exec**; the reason for not using that option is because the syntax for using that ends with \\; and in Python '\\' is treated as an escape character which is why by default python takes \\; as \\\\; and so 'find' command returns nothing. I tried all ways to get around it, but nothing seems to be working.
