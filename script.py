@@ -42,7 +42,7 @@ def menu():
 # be done using this script, and then the user is asked to select one of
 # those options
 menu()
-choice = input("Please select a command: ")
+choice = eval(input("Please select a command: "))
 
 # keeps track of the command number for the log_file
 # the log_file keep track of the commands that the user
@@ -69,12 +69,18 @@ while choice != 5:
     # a variable, which then used for proccessing the terminal as well as the
     # log_file output
     if choice == 1:
-        cmd_number += 1
+        cmd_number += 1 #incrementing command number
         cmd = ['find']
-        dir_path = raw_input("\nEnter the directory path: ")
+        dir_path = input("\nEnter the directory path: ")
         find_options()
         cmd.append(dir_path)
-        option = raw_input("Enter the find option (press enter for no option): ")
+        option = input("Enter the find option (press enter for no option): ")
+
+        # writing the find parameters to the log_file in a formatted way
+        log_file.write("Command " + str(cmd_number) + ": FIND\n")
+        log_file.write(" Search Path: " + dir_path + "\n")
+        log_file.write(" Search Options: " + option + "\n\n")
+
         option = option.replace("'", "")
         option = option.replace('"', '')
         cmd = cmd + option.split()
@@ -83,15 +89,11 @@ while choice != 5:
 
         result = output.splitlines() # splitting the output by '\n' to easily
                                      #format the terminal output
-        # writing to the log_file in a formatted way
-        log_file.write("Command " + str(cmd_number) + ": FIND\n")
-        log_file.write(" Search Path: " + dir_path + "\n")
-        log_file.write(" Search Options: " + option + "\n\n")
 
         print("\nThe following files were found in: ")
         for i in result:
-            print(" - " + i) # printing to terminal
-            log_file.write(" - " + i + "\n"); # writing to log_file
+            print(" - " + i.decode()) # printing to terminal
+            log_file.write(" - " + i.decode() + "\n"); # writing to log_file
 
         log_file.write("----------\n\n")
         print("-------------------x-------------------x-------------------x-------------------x-------------------")
@@ -104,11 +106,18 @@ while choice != 5:
     # error message for the same.
     elif choice == 2:
         cmd_number += 1
-        file_name = raw_input("\nEnter file name: ")
+        file_name = input("\nEnter file name: ")
+        log_file.write("Command " + str(cmd_number) + ": GREP\n")
+        log_file.write(" Search File: " + file_name + "\n")
         if os.path.exists(file_name):
             grep_options()
-            option = raw_input("Enter grep options (press enter for no option): ")
-            pattern = raw_input('Search for this string (can use REGEX here): ')
+            option = input("Enter grep options (press enter for no option): ")
+            pattern = input('Search for this string (can use REGEX here): ')
+
+            #writing the grep params to log_file
+            log_file.write(" Search Options: " + option + "\n")
+            log_file.write(" Search Pattern: " + pattern + "\n\n")
+
             cmd = ['grep']
             if len(option) > 0: # if the user enters the options
                 pattern = pattern.replace("'", "")
@@ -123,19 +132,15 @@ while choice != 5:
                 output, err = found.communicate()
 
             result = output.splitlines()
-            log_file.write("Command " + str(cmd_number) + ": GREP\n")
-            log_file.write(" Search File: " + file_name + "\n")
-            log_file.write(" Search Options: " + option + "\n")
-            log_file.write(" Search Pattern: " + pattern + "\n\n")
-            print("\nThe following lines were found in " + file_name + ":")
+            print(("\nThe following lines were found in " + file_name + ":"))
             for i in result:
-                print(" - " + i)
-                log_file.write(" - " + i + "\n");
-
-            log_file.write("----------\n\n")
-
+                print(" - " + i.decode())
+                log_file.write(" - " + i.decode() + "\n")
         else:
              print("This file does not exist: " + file_name)
+             log_file.write(" This file does not exist: " + file_name + "\n")
+
+        log_file.write("----------\n\n")
         print("-------------------x-------------------x-------------------x-------------------x-------------------")
 
     # else-if statement for generating a directory tree. Here I am using the
@@ -147,14 +152,21 @@ while choice != 5:
     # informing the user about the tree-directory and where is it stored.
     elif choice == 3:
         cmd_number += 1
-        directory = raw_input("\nEnter the directory path: ")
-        output_file = raw_input("Enter the output file name [with the .html extension and path]: ")
-        cmd = "sh ./chavda_myScript.sh " + directory + " " + output_file
-        os.system(cmd)
+        directory = input("\nEnter the directory path: ")
         log_file.write("Command " + str(cmd_number) + ": DIRECTORY TREE SCRIPT\n")
         log_file.write(" Directory path: " + directory + "\n")
-        log_file.write(" Output file name (path): " + output_file + "\n----------\n\n")
-        print("\nThe directory tree for " + directory + " is stored in " + output_file)
+
+        if os.path.exists(directory):
+            output_file = input("Enter the output file name [with the .html extension and path]: ")
+            cmd = "sh ./chavda_myScript.sh " + directory + " " + output_file
+            os.system(cmd)
+            log_file.write(" Output file name (path): " + output_file + "\n----------\n\n")
+            print("\nThe directory tree for " + directory + " is stored in " + output_file)
+
+        else:
+            print("No such directory")
+            log_file.write(" No such directory: " + directory + "\n")
+        log_file.write("----------\n\n")
         print("-------------------x-------------------x-------------------x-------------------x-------------------")
 
     # else-if statement for chainging file/directory permissions. This one is
@@ -166,20 +178,26 @@ while choice != 5:
     # permissions of the file.
     elif choice == 4:
         cmd_number += 1
-        dir_path = raw_input("\nEnter the directory/file path: ")
-        chmod_permissions()
-        perm = raw_input("Enter the permission you want to set in the form [user][group][other]: ")
-        cmd = "chmod " + perm + " " + dir_path
-        os.system(cmd)
+        dir_path = input("\nEnter the directory/file path: ")
         log_file.write("Command " + str(cmd_number) + ": CHMOD\n")
         log_file.write(" Directory/File path: " + dir_path + "\n")
-        log_file.write(" Permission for the dir/file: " + perm + "\n----------\n\n")
-        print("You have succefully changed the permission for " + dir_path)
+        if os.path.exists(dir_path):
+            chmod_permissions()
+            perm = input("Enter the permission you want to set in the form [user][group][other]: ")
+            cmd = "chmod " + perm + " " + dir_path
+            os.system(cmd)
+            log_file.write(" Permission for the dir/file: " + perm + "\n----------\n\n")
+            print("You have succefully changed the permission for " + dir_path)
+        else:
+            print("This file does not exist: " + dir_path)
+            log_file.write(" This file does not exist: " + dir_path + "\n")
+
+        log_file.write("----------\n\n")
         print("-------------------x-------------------x-------------------x-------------------x-------------------")
 
     # Print the menu again as one of the command was selected and now is complete
     menu()
-    choice = input ("Please select a command: ")
+    choice = eval(input ("Please select a command: "))
 
 # end-while loop
 
