@@ -73,6 +73,7 @@ while choice != 5:
         cmd_number += 1 #incrementing command number
         cmd = ['find']
         dir_path = input("\nEnter the directory path: ")
+        dir_path = dir_path.replace("~", "/home/"+getpass.getuser())
         find_options()
         cmd.append(dir_path)
         option = input("Enter the find option (press enter for no option): ")
@@ -110,7 +111,9 @@ while choice != 5:
         file_name = input("\nEnter file name: ")
         log_file.write("Command " + str(cmd_number) + ": GREP\n")
         log_file.write(" Search File: " + file_name + "\n")
-        # Since sometimes os.path.exists() return false when abs path is inputted, I replace the "~" with "/home/<username>"
+
+        # Since relative paths don't work very well with Python, I conver that
+        # to absolute path and then continue.
         file_name = file_name.replace("~", "/home/"+getpass.getuser())
         if os.path.exists(file_name):
             grep_options()
@@ -158,7 +161,9 @@ while choice != 5:
         directory = input("\nEnter the directory path: ")
         log_file.write("Command " + str(cmd_number) + ": DIRECTORY TREE SCRIPT\n")
         log_file.write(" Directory path: " + directory + "\n")
-        # Since sometimes os.path.exists() return false when abs path is inputted, I replace the "~" with ""
+
+        # Since relative paths don't work very well with Python, I conver that
+        # to absolute path and then continue.
         directory = directory.replace("~", "/home/"+getpass.getuser())
         if os.path.exists(directory):
             output_file = input("Enter the output file name [with the .html extension and path]: ")
@@ -186,7 +191,9 @@ while choice != 5:
         dir_path = input("\nEnter the directory/file path: ")
         log_file.write("Command " + str(cmd_number) + ": CHMOD\n")
         log_file.write(" Directory/File path: " + dir_path + "\n")
-        # Since sometimes os.path.exists() return false when abs path is inputted, I replace the "~" with ""
+
+        # Since relative paths don't work very well with Python, I conver that
+        # to absolute path and then continue.
         dir_path = dir_path.replace("~", "/home/"+getpass.getuser())
         if os.path.exists(dir_path):
             chmod_permissions()
